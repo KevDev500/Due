@@ -1,0 +1,22 @@
+﻿<div>
+    <form [formGroup]="companySearchForm" (ngSubmit)="search()" novalidate>
+        <div class="form-group">
+            <label class="center-block">
+                Name:
+                <input class="form-control" formControlName="name">
+            </label>
+        </div>
+
+        <div style="margin-bottom: 1em">
+            <button type="submit" [disabled]="companySearchForm.pristine || companySearchForm.invalid" class="btn btn-primary">
+                Search
+            </button>
+        </div>
+    </form>
+
+    <table>
+        <tr *ngFor="let company of companies" (click)="companySelected(company)">
+                <td>{{company.name}}</td>
+        </tr>
+    </table>
+</div>

@@ -1,0 +1,44 @@
+﻿<main>
+    <h2>Terminal Order Form</h2>
+    <h3>
+        <i>Place an order for a Spire SPc5 terminal</i>
+    </h3>
+
+    <section id="companySearch" [hidden]="!!selectedCompany">
+        <company-search (companySelected)="companySelected($event)"></company-search>
+    </section>
+
+    <section id="selectedCompany" [hidden]="!selectedCompany">
+        <pre>Selected company: {{selectedCompany?.name}}</pre>
+    </section>
+
+    <section id="orderForm" [hidden]="!selectedCompany">
+        <form [formGroup]="orderForm" (ngSubmit)="placeOrder()" novalidate>
+            <div class="form-group">
+                <label class="center-block">
+                    Quantity:
+                    <select class="form-control" formControlName="quantity">
+                        <option value="" disabled selected>Select quantity</option>
+                        <option *ngFor="let q of quantityOptions" [ngValue]="q">{{q}}</option>
+                    </select>
+                </label>
+                <input type="hidden" formControlName="company" />
+            </div>
+
+            <div style="margin-bottom: 1em">
+                <button type="submit" [disabled]="orderForm.pristine || orderForm.invalid" class="btn btn-primary">
+                    order
+                </button>
+            </div>
+        </form>
+    </section>
+
+    <section id="orderList">
+        <table>
+            <tr *ngFor="let order of orders$ | async">
+                <td>{{order.company.name}}</td>
+                <td>{{order.quantity}}</td>
+            </tr>
+        </table>
+    </section>
+</main>
